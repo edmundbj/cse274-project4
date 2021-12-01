@@ -1,5 +1,5 @@
 
-public class Edge {
+public class Edge implements Comparable<Edge> {
 
 	// ========================================================== Properties
 	
@@ -30,6 +30,11 @@ public class Edge {
 
 	public int getDistCost() {
 		return distCost;
+	}
+	@Override
+	public int compareTo(Edge o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }
