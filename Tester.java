@@ -46,6 +46,9 @@ public class Tester extends JPanel implements ActionListener {
 	
 	public Tester() throws IOException {
 		
+		Graph.useDistCost = false;
+		Graph.returnAddress = false;
+		
 		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
 		JPanel northPanel = new JPanel(new BorderLayout());
 		JPanel centerPanel = new JPanel(new BorderLayout());
@@ -110,6 +113,7 @@ public class Tester extends JPanel implements ActionListener {
         JToggleButton box3 = new JCheckBox("Display symbol");
         JToggleButton box4 = new JCheckBox("Display address");
         box1.setSelected(true);
+        box3.setSelected(true);
         
         ButtonGroup buttons1 = new ButtonGroup();
         buttons1.add(box1);
@@ -258,6 +262,20 @@ public class Tester extends JPanel implements ActionListener {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		Graph.useDistCost = true;
+        	}
+        });
+        
+        box3.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        		Graph.returnAddress = false;
+        	}
+        });
+        
+        box4.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        		Graph.returnAddress = true;
         	}
         });
         
