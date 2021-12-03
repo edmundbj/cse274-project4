@@ -32,18 +32,20 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
 public class Tester extends JPanel implements ActionListener {
-	
+
 	Timer tmr = null;
 	Random rnd = new Random();
 	private String v1, v2;
 	
 	public Tester() throws IOException {
+		
 		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
 		JPanel northPanel = new JPanel(new BorderLayout());
 		JPanel centerPanel = new JPanel(new BorderLayout());
@@ -102,20 +104,26 @@ public class Tester extends JPanel implements ActionListener {
         JPanel boxPanel = new JPanel(new GridLayout(2,1, 0, -40));
         
         boxPanel.setSize(1,1);
+        
         JToggleButton box1 = new JCheckBox("Directions based on shortest time");
         JToggleButton box2 = new JCheckBox("Directions based on shortest distance");
+        JToggleButton box3 = new JCheckBox("Display symbol");
+        JToggleButton box4 = new JCheckBox("Display address");
         box1.setSelected(true);
         
-        //box1.setBorder(BorderFactory.createEmptyBorder());
-        //box2.setBorder(BorderFactory.createEmptyBorder());
+        ButtonGroup buttons1 = new ButtonGroup();
+        buttons1.add(box1);
+        buttons1.add(box2);
         
-        ButtonGroup buttons = new ButtonGroup();
-        buttons.add(box1);
-        buttons.add(box2);
+        ButtonGroup buttons2 = new ButtonGroup();
+        buttons2.add(box3);
+        buttons2.add(box4);
 
         
         boxPanel.add(box1);
         boxPanel.add(box2);
+        boxPanel.add(box3);
+        boxPanel.add(box4);
         
         northPanel.add(boxPanel);
         
@@ -284,7 +292,7 @@ public class Tester extends JPanel implements ActionListener {
 		JFrame window = new JFrame("Navigation");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(mainPanel);		
-	    window.setSize(800, 600);
+	    window.setSize(900, 600);
 	    window.setLocationRelativeTo(null);
 	    window.setVisible(true);
 	    window.setResizable(false);
