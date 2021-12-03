@@ -33,8 +33,13 @@ public class Edge implements Comparable<Edge> {
 	}
 	@Override
 	public int compareTo(Edge o) {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	@Override
+	public String toString() {
+		return "" + source.getSymbol() + " --> " + destination.getSymbol();
+				
 	}
 	
 }

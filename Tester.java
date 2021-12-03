@@ -34,6 +34,7 @@ public class Tester extends JPanel implements ActionListener {
 	
 	Timer tmr = null;
 	Random rnd = new Random();
+	private String v1, v2;
 	
 	public Tester() {
 		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
@@ -96,6 +97,7 @@ public class Tester extends JPanel implements ActionListener {
         boxPanel.setSize(1,1);
         JToggleButton box1 = new JCheckBox("Directions based on lowest price");
         JToggleButton box2 = new JCheckBox("Directions based on lowest distance");
+        box1.setSelected(true);
         
         //box1.setBorder(BorderFactory.createEmptyBorder());
         //box2.setBorder(BorderFactory.createEmptyBorder());
@@ -117,12 +119,16 @@ public class Tester extends JPanel implements ActionListener {
         JTextField field1 = new JTextField(15);
         JTextField field2 = new JTextField(15);
         JLabel label = new JLabel("to");
-        JButton submit = new JButton("Submit");
+        JButton submit = new JButton("Get shortest path");
+        JButton all = new JButton("Show all directions");
+        field1.setEditable(false);
+        field2.setEditable(false);
         
         submitPanel.add(field1);
         submitPanel.add(label);
         submitPanel.add(field2);
         submitPanel.add(submit);
+        submitPanel.add(all);
 
         centerPanel.add(submitPanel, BorderLayout.WEST);
 
@@ -131,10 +137,14 @@ public class Tester extends JPanel implements ActionListener {
         JPanel outputPanel = new JPanel();
         JTextArea output = new JTextArea();
         output.setText("Please make Selections");
+        output.setEditable(false);
         output.setColumns(30);
         output.setRows(8);
         output.setBounds(0, 0, 50, 50);
         JLabel outputLabel = new JLabel("Output");
+        JScrollPane pane3 = new JScrollPane(output);
+        outputPanel.add(pane3);
+        
         
         outputPanel.add(outputLabel, BorderLayout.NORTH);
         outputPanel.add(output, BorderLayout.SOUTH);
@@ -164,13 +174,16 @@ public class Tester extends JPanel implements ActionListener {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String selected = list1.getSelectedValue();
+				v1 = list1.getSelectedValue().substring(0, 1);
 				field1.setText(selected);
 			}
 		});
+        
         list2.addMouseListener(new MouseListener() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String selected = list2.getSelectedValue();
+				v2 = list2.getSelectedValue().substring(0, 1);
 				field2.setText(selected);
 			}
 			@Override
@@ -194,12 +207,40 @@ public class Tester extends JPanel implements ActionListener {
         	
         });
         
+        // Changing the useDistCost boolean based on which box is checked
+        
+        box1.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        		Graph.useDistCost = false;
+        	}
+        });
+        
+        box2.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        		Graph.useDistCost = true;
+        	}
+        });
+        
         // Adding Event to Submit Button
         
         submit.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
         		Graph graph = new Graph("MapInformation.txt");
+        		//output.setText(graph.toString());
+        		output.setText(Dijkstra.shortestPath(graph, v1, v2).toString());
+        		
+        	}
+
+        });
+        
+        all.addActionListener(new ActionListener() {
+        	@Override
+        	public void actionPerformed(ActionEvent event) {
+        		Graph graph = new Graph("MapInformation.txt");
+        		//output.setText(graph.toString());
         		output.setText(graph.toString());
         		
         	}
@@ -213,9 +254,10 @@ public class Tester extends JPanel implements ActionListener {
 		JFrame window = new JFrame("Navigation");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(mainPanel);		
-	    window.setSize(650, 400);
+	    window.setSize(800, 500);
 	    window.setLocationRelativeTo(null);
 	    window.setVisible(true);
+	    window.setResizable(false);
 		//============================================================ Events
 		
 		tmr = new Timer(0, new ActionListener() {

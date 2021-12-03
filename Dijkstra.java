@@ -1,8 +1,6 @@
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.PriorityQueue;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Dijkstra {
 
@@ -19,7 +17,8 @@ public class Dijkstra {
 	 * 
 	 * 2. Remember to replace PriorityQueue with our implementation of HeapPriorityQueue.
 	 */
-	public static Path shortestPath(String v1, String v2) {
+	@SuppressWarnings("static-access")
+	public static Path shortestPath(Graph g, String v1, String v2) {
 		PriorityQueue<State> pq = new PriorityQueue<State>();
 		pq.add(new State(v1, 0, v1));
 		ArrayList<String> visited = new ArrayList<String>();
@@ -28,24 +27,33 @@ public class Dijkstra {
 			State nextEntry = pq.remove();
 			if (visited.contains(nextEntry.vertex)) {
 				continue;
-			} else {
-				// not sure
 			}
 			
 			visited.add(nextEntry.vertex);
 			if (nextEntry.vertex.equals(v2)) {
-				return new Path(nextEntry.path); // changes from State to Path
+				//System.out.println(nextEntry.path);
+				return new Path(nextEntry); // changes from State to Path
 			} else {
 				String currVertex = nextEntry.vertex;
 				int currCost = nextEntry.cost;
 				String currPath = nextEntry.path;
-				Set<Vertex> neighbors = Graph.getNeighbors(Graph.getVertex(currPath));
+				
+				// everything up to this point should be correct
+				
+//				System.out.println(currVertex);
+//				System.out.println(currCost);
+//				System.out.println(currPath);
+//				System.out.println();
+				
+				Vertex x = g.getVertex(currVertex);
+				//System.out.println(x.getSymbol());
+				Set<Vertex> neighbors = g.getNeighbors(x);
 				
 				for (Vertex v : neighbors) { 
 					if (!visited.contains(v.getSymbol())) { // every unvisited neighbor to currVertex, V
 						int nextCost = 0; // edge cost of currVertex --> V
-						if (Graph.useDistCost) nextCost = currCost + Graph.getEdge(currVertex, v.getSymbol()).getDistCost();
-						else nextCost = currCost + Graph.getEdge(currVertex, v.getSymbol()).getTimeCost();
+						if (g.useDistCost) nextCost = currCost + g.getEdge(currVertex, v.getSymbol()).getDistCost();
+						else nextCost = currCost + g.getEdge(currVertex, v.getSymbol()).getTimeCost();
 						String nextPath = currPath + v.getSymbol(); // V appended
 						pq.add(new State(v.getSymbol(), nextCost, nextPath));
 					}
@@ -54,8 +62,35 @@ public class Dijkstra {
 			}
 		}
 		
-		throw new NoSuchElementException();
+		return null;
 		
 	}
+	
+	
+	public static void main(String[] args) {
+		Graph g = new Graph("MapInformation.txt");
+		Path p = shortestPath(g, "A", "K");
+		
+		System.out.println(p);
+	}
+	
+	
+//	public static Path shortestPath(String v1, String v2) {
+//		PriorityQueue<State> pq = new PriorityQueue<State>();
+//		pq.add(new State(v1, 0, v1));
+//		ArrayList<String> visited = new ArrayList<String>();
+//		
+//		while (!pq.isEmpty()) {
+//			State nextEntry = pq.remove();
+//			
+//			if (visited.contains(nextEntry.vertex)) {
+//				continue;
+//			}
+//			
+//			visited.add(nextEntry.vertex);
+//			
+//		}
+//	}
+	
 	
 }

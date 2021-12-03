@@ -1,5 +1,5 @@
 
-public class Vertex {
+public class Vertex implements Comparable<Vertex> {
 	
 	// ========================================================== Properties
 	
@@ -20,6 +20,19 @@ public class Vertex {
 	
 	public String getAddress() {
 		return address;
+	}
+
+	@Override
+	public int compareTo(Vertex o) {
+		return 0;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (!(o instanceof Vertex)) return false;
+		Vertex v = (Vertex) o;
+		return symbol.equals(v.getSymbol()) &&
+				address.equals(v.getAddress());	
 	}
 	
 }

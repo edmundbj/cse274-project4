@@ -1,22 +1,17 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class Graph {
 	
 	// ========================================================== Properties
 	
 	public static boolean useDistCost = true;
-	public static boolean returnAddress = true;
+	public static boolean returnAddress = false;
 	private static Map<Vertex, Set<Edge>> graph;
 	
 	// ========================================================== Constructors
@@ -30,7 +25,7 @@ public class Graph {
 		graph = new HashMap<Vertex, Set<Edge>>();
 		
 		// Variable to check loops
-		int count = 0;
+		//int count = 0;
 		
 		try {
 			
@@ -101,7 +96,9 @@ public class Graph {
 	}
 	
 	public static Set<Vertex> getNeighbors(Vertex v) {
-		Set<Vertex> ret = new TreeSet<Vertex>();
+		Set<Vertex> ret = new HashSet<Vertex>();
+		
+		//System.out.println(graph.containsKey(v));
 		
 		for (Edge e : graph.get(v)) {
 			ret.add(e.getDestination());
@@ -112,6 +109,7 @@ public class Graph {
 	
 	public static Edge getEdge(String v1, String v2) {
 		Set<Edge> edges = graph.get(getVertex(v1));
+		//System.out.println(edges.size());
 		
 		for (Edge e : edges) {
 			if (e.getDestination().equals(getVertex(v2))) return e;
@@ -120,37 +118,52 @@ public class Graph {
 		return null;
 	}
 	
+//	@Override
+//	public String toString() {
+//		String ret = "";
+//		
+//		if (returnAddress) {
+//			if (useDistCost) {
+//				for (Vertex v : graph.keySet()) {
+//					for (Edge e : graph.get(v)) {
+//						ret += e.getSource().getAddress() + " -----> " + e.getDestination().getAddress() + " === " + e.getDistCost() + "\n";
+//					}
+//				}
+//			} else {
+//				for (Vertex v : graph.keySet()) {
+//					for (Edge e : graph.get(v)) {
+//						ret += e.getSource().getAddress() + " -----> " + e.getDestination().getAddress() + " === " + e.getTimeCost() + "\n";
+//					}
+//				}
+//			}
+//		} else {
+//			if (useDistCost) {
+//				for (Vertex v : graph.keySet()) {
+//					for (Edge e : graph.get(v)) {
+//						ret += e.getSource().getSymbol() + " -----> " + e.getDestination().getSymbol() + " === " + e.getDistCost() + "\n";
+//					}
+//				}
+//			} else {
+//				for (Vertex v : graph.keySet()) {
+//					for (Edge e : graph.get(v)) {
+//						ret += e.getSource().getSymbol() + " -----> " + e.getDestination().getSymbol() + " === " + e.getTimeCost() + "\n";
+//					}
+//				}
+//			}
+//		}
+//		
+//		return ret;
+//	}
+	
 	@Override
 	public String toString() {
 		String ret = "";
 		
-		if (returnAddress) {
-			if (useDistCost) {
-				for (Vertex v : graph.keySet()) {
-					for (Edge e : graph.get(v)) {
-						ret += e.getSource().getAddress() + " -----> " + e.getDestination().getAddress() + " === " + e.getDistCost() + "\n";
-					}
-				}
-			} else {
-				for (Vertex v : graph.keySet()) {
-					for (Edge e : graph.get(v)) {
-						ret += e.getSource().getAddress() + " -----> " + e.getDestination().getAddress() + " === " + e.getTimeCost() + "\n";
-					}
-				}
-			}
-		} else {
-			if (useDistCost) {
-				for (Vertex v : graph.keySet()) {
-					for (Edge e : graph.get(v)) {
-						ret += e.getSource().getSymbol() + " -----> " + e.getDestination().getSymbol() + " === " + e.getDistCost() + "\n";
-					}
-				}
-			} else {
-				for (Vertex v : graph.keySet()) {
-					for (Edge e : graph.get(v)) {
-						ret += e.getSource().getSymbol() + " -----> " + e.getDestination().getSymbol() + " === " + e.getTimeCost() + "\n";
-					}
-				}
+		for (Vertex v : graph.keySet()) {
+			for (Edge e : graph.get(v)) {
+				ret += (returnAddress ? e.getSource().getAddress() : e.getSource().getSymbol()) + " -----> " +
+						(returnAddress ? e.getDestination().getAddress() : e.getDestination().getSymbol()) + " -----> " +
+						(useDistCost ? e.getDistCost() : e.getTimeCost()) + "\n";
 			}
 		}
 		
@@ -160,7 +173,16 @@ public class Graph {
 	public static void main(String[] args) {
 		Graph g = new Graph("MapInformation.txt");
 		
-		System.out.println(g.toString());
+//		Path p = Dijkstra.shortestPath(g, "A", "C");
+		
+//		Vertex a = g.getVertex("A");
+		
+//		System.out.print(graph.get(a));
+		
+//		Edge e = getEdge("A", "C");
+//		System.out.println(e.toString());
+		
+		//System.out.println(g.toString());
 	}
 	
 }
