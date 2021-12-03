@@ -1,7 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,21 +11,26 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -36,7 +43,7 @@ public class Tester extends JPanel implements ActionListener {
 	Random rnd = new Random();
 	private String v1, v2;
 	
-	public Tester() {
+	public Tester() throws IOException {
 		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
 		JPanel northPanel = new JPanel(new BorderLayout());
 		JPanel centerPanel = new JPanel(new BorderLayout());
@@ -95,8 +102,8 @@ public class Tester extends JPanel implements ActionListener {
         JPanel boxPanel = new JPanel(new GridLayout(2,1, 0, -40));
         
         boxPanel.setSize(1,1);
-        JToggleButton box1 = new JCheckBox("Directions based on lowest price");
-        JToggleButton box2 = new JCheckBox("Directions based on lowest distance");
+        JToggleButton box1 = new JCheckBox("Directions based on shortest time");
+        JToggleButton box2 = new JCheckBox("Directions based on shortest distance");
         box1.setSelected(true);
         
         //box1.setBorder(BorderFactory.createEmptyBorder());
@@ -134,6 +141,8 @@ public class Tester extends JPanel implements ActionListener {
 
         // Creating JTextField that will output the results
         
+        
+        
         JPanel outputPanel = new JPanel();
         JTextArea output = new JTextArea();
         output.setText("Please make Selections");
@@ -141,14 +150,35 @@ public class Tester extends JPanel implements ActionListener {
         output.setColumns(30);
         output.setRows(8);
         output.setBounds(0, 0, 50, 50);
+        
+        JScrollPane outputArea = new JScrollPane(output);
+        JScrollBar bar = outputArea.getVerticalScrollBar();
+        outputArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        outputArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        bar.setPreferredSize(new Dimension(15,0));
+        
+        
         JLabel outputLabel = new JLabel("Output");
-        JScrollPane pane3 = new JScrollPane(output);
-        outputPanel.add(pane3);
         
         
         outputPanel.add(outputLabel, BorderLayout.NORTH);
-        outputPanel.add(output, BorderLayout.SOUTH);
+        outputPanel.add(outputArea, BorderLayout.SOUTH);
         southPanel.add(outputPanel);
+        
+        // Adding Map Image
+        ImageIcon map = new ImageIcon(getClass().getResource("FinalProjectGraph_Final.png"));
+        Image image = map.getImage();
+        Image newMap = image.getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
+        map = new ImageIcon(newMap);
+        
+        JLabel mapLabel = new JLabel(map);
+        JPanel mapPanel = new JPanel();
+        mapPanel.add(mapLabel);
+        
+        JPanel formatSouth = new JPanel();
+        formatSouth.add(outputPanel, BorderLayout.WEST);
+        formatSouth.add(mapPanel, BorderLayout.EAST);
+        southPanel.add(formatSouth);
         
         // Adding all secondary panels to the primary panel
         
@@ -254,7 +284,7 @@ public class Tester extends JPanel implements ActionListener {
 		JFrame window = new JFrame("Navigation");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.add(mainPanel);		
-	    window.setSize(800, 500);
+	    window.setSize(800, 600);
 	    window.setLocationRelativeTo(null);
 	    window.setVisible(true);
 	    window.setResizable(false);
@@ -328,7 +358,7 @@ public class Tester extends JPanel implements ActionListener {
 	}
 	
 	//======================================================
-	public static void main(String[] args) { new Tester(); }
+	public static void main(String[] args) throws IOException { new Tester(); }
 	//======================================================
 
 	@Override
