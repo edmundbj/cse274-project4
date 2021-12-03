@@ -1,4 +1,11 @@
-
+/**
+ * 
+ * @author Blake Edmunds
+ * @author Sam Curran
+ * 
+ * This is the Edge class for Project 4.
+ * 
+ */
 public class Edge implements Comparable<Edge> {
 
 	// ========================================================== Properties
@@ -6,7 +13,7 @@ public class Edge implements Comparable<Edge> {
 	private Vertex source, destination;
 	private int timeCost, distCost;
 	
-	// ========================================================== Constructors
+	// ========================================================== Constructor
 	
 	public Edge(Vertex source, Vertex destination, int timeCost, int distCost) {
 		this.source = source;
@@ -31,6 +38,7 @@ public class Edge implements Comparable<Edge> {
 	public int getDistCost() {
 		return distCost;
 	}
+	
 	@Override
 	public int compareTo(Edge o) {
 		return 0;
@@ -38,7 +46,7 @@ public class Edge implements Comparable<Edge> {
 	
 	@Override
 	public String toString() {
-		return "" + source.getSymbol() + " --> " + destination.getSymbol();
+		return "" + source.getSymbol() + "  -->  " + destination.getSymbol();
 				
 	}
 	

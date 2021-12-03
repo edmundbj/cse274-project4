@@ -1,6 +1,14 @@
 import java.util.PriorityQueue;
 import java.util.Queue;
 
+/**
+ * 
+ * @author Blake Edmunds
+ * @author Sam Curran
+ * 
+ * This is the Path class for Project 4.
+ * 
+ */
 public class Path implements Comparable<Path> {
 	
 	// ========================================================== Properties
@@ -24,22 +32,6 @@ public class Path implements Comparable<Path> {
 		}
 		
 	}
-	
-//	public Path(String path) {
-//		verticies = new HashSet<Vertex>();
-//		cost = 0;
-//		char prev = path.charAt(0);
-//		
-//		for (char c : path.substring(1).toCharArray()) {
-//			Edge e = Graph.getEdge("" + prev, "" + c);
-//			verticies.add(e.getSource());
-//			
-//			if (Graph.useDistCost) cost += e.getDistCost();
-//			else cost += e.getTimeCost();
-//			
-//		}
-//		
-//	}
 
 	// ========================================================== Methods
 	
@@ -52,13 +44,11 @@ public class Path implements Comparable<Path> {
 	public String toString() {
 		String ret = "";
 		
-		//System.out.println(verticies.size());
-		
 		for (Vertex v : verticies) {
-			ret += (Graph.returnAddress ? v.getAddress() : v.getSymbol()) + " ---> ";
+			ret += (Graph.returnAddress ? v.getAddress() : v.getSymbol()) + "  -->  ";
 		}
 		
-		return ret.substring(0, ret.length() - 6) + "    :    cost = " + cost;
+		return ret.substring(0, ret.length() - 6) + "\n\nThe shortest path costs " + cost + (Graph.useDistCost ? " miles" : " minutes");
 	}
 
 }

@@ -1,11 +1,18 @@
-
+/**
+ * 
+ * @author Blake Edmunds
+ * @author Sam Curran
+ * 
+ * This is the Vertex class for Project 4.
+ * 
+ */
 public class Vertex implements Comparable<Vertex> {
 	
 	// ========================================================== Properties
 	
 	private String symbol, address;
 	
-	// ========================================================== Constructors
+	// ========================================================== Constructor
 	
 	public Vertex(String symbol, String address) {
 		this.symbol = symbol;

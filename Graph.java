@@ -6,6 +6,14 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
+/**
+ * 
+ * @author Blake Edmunds
+ * @author Sam Curran
+ * 
+ * This is the Graph class for Project 4.
+ * 
+ */
 public class Graph {
 	
 	// ========================================================== Properties
@@ -14,42 +22,46 @@ public class Graph {
 	public static boolean returnAddress = false;
 	private static Map<Vertex, Set<Edge>> graph;
 	
-	// ========================================================== Constructors
-	
-	// HashMap<Vertex, Set<Edge>>;
-	// vertex is the key, set is the value
-	
+	// ========================================================== Constructor
 	
 	public Graph(String fileName) {
 		
 		graph = new HashMap<Vertex, Set<Edge>>();
+		readFile(fileName);
 		
-		// Variable to check loops
-		//int count = 0;
-		
+	}
+	
+	// ========================================================== Methods
+	
+	public void readFile(String fileName) {
 		try {
 			
-			// Reads in the file
+			// Creates a scanner
 			Scanner file = new Scanner(new File(fileName));
 			String line = file.nextLine();
 			
 			Map<String, String> verticies = new HashMap<String, String>();
 			
+			// Skips lines until the Nodes are reached
 			while (!line.equals("<Nodes>")) { line = file.nextLine(); }
 			
 			// Skips two lines of header text in the file
 			file.nextLine();
 			line = file.nextLine();
 			
+			// Creates Vertex objects (each of which contains a symbol and an address property)
 			while (!line.equals("</Nodes>")) {
 				String[] s = line.split("\t");
 				verticies.put(s[0], s[1]);
 				line = file.nextLine();
 			}
 			
+			// Skips lines until Edges are reached
 			while (!line.equals("<Edges>")) { line = file.nextLine(); }
 			file.nextLine();
 			
+			// Creates Edge objects (each of which contains a source, destination, time cost, 
+			// and distance cost property) and adds them to a set
 			line = file.nextLine();
 			String[] s = line.split("\t");
 			while (!line.equals("</Edges>")) {
@@ -63,6 +75,8 @@ public class Graph {
 					s = line.split("\t");
 				} while (s[0].equals(v.getSymbol()));
 				
+				// When the next line contains a different source Vertex, the current set of Edges are
+				// added to the graph Map as values of the corresponding Vertex key (the source Vertex)
 				graph.put(v, edges);
 				
 			}
@@ -74,19 +88,7 @@ public class Graph {
 		}
 	}
 	
-	// ========================================================== Methods
-	
-	public void addVertex(Character symbol, String address) {
-		// use getVertex() to check if the Vertex object already exists
-		// If null, create a Vertex and add it to the HashMap
-	}
-	
-	public void addEdge(Vertex v0, Vertex v1, Integer c) {
-		// If v0 doesn't exist as a key in my HashMap, create a new Vertex and add it as a key with
-		// Create a new edge: Edge e = new Edge(v1, c)
-		// Get the value (Set) of key (v0) and add the 
-	}
-	
+	// Returns the Vertex object that contains the corresponding symbol
 	public static Vertex getVertex(String symbol) {
 		for (Vertex v : graph.keySet()) {
 			if (v.getSymbol().equals(symbol)) return v;
@@ -95,10 +97,9 @@ public class Graph {
 		return null;
 	}
 	
+	// Returns a set of Vertex objects representing the "neighbors" of a given Vertex object
 	public static Set<Vertex> getNeighbors(Vertex v) {
 		Set<Vertex> ret = new HashSet<Vertex>();
-		
-		//System.out.println(graph.containsKey(v));
 		
 		for (Edge e : graph.get(v)) {
 			ret.add(e.getDestination());
@@ -107,9 +108,9 @@ public class Graph {
 		return ret;
 	}
 	
+	// Returns the Edge object that contains the corresponding source and destination Vertex symbols
 	public static Edge getEdge(String v1, String v2) {
 		Set<Edge> edges = graph.get(getVertex(v1));
-		//System.out.println(edges.size());
 		
 		for (Edge e : edges) {
 			if (e.getDestination().equals(getVertex(v2))) return e;
@@ -117,43 +118,6 @@ public class Graph {
 		
 		return null;
 	}
-	
-//	@Override
-//	public String toString() {
-//		String ret = "";
-//		
-//		if (returnAddress) {
-//			if (useDistCost) {
-//				for (Vertex v : graph.keySet()) {
-//					for (Edge e : graph.get(v)) {
-//						ret += e.getSource().getAddress() + " -----> " + e.getDestination().getAddress() + " === " + e.getDistCost() + "\n";
-//					}
-//				}
-//			} else {
-//				for (Vertex v : graph.keySet()) {
-//					for (Edge e : graph.get(v)) {
-//						ret += e.getSource().getAddress() + " -----> " + e.getDestination().getAddress() + " === " + e.getTimeCost() + "\n";
-//					}
-//				}
-//			}
-//		} else {
-//			if (useDistCost) {
-//				for (Vertex v : graph.keySet()) {
-//					for (Edge e : graph.get(v)) {
-//						ret += e.getSource().getSymbol() + " -----> " + e.getDestination().getSymbol() + " === " + e.getDistCost() + "\n";
-//					}
-//				}
-//			} else {
-//				for (Vertex v : graph.keySet()) {
-//					for (Edge e : graph.get(v)) {
-//						ret += e.getSource().getSymbol() + " -----> " + e.getDestination().getSymbol() + " === " + e.getTimeCost() + "\n";
-//					}
-//				}
-//			}
-//		}
-//		
-//		return ret;
-//	}
 	
 	@Override
 	public String toString() {
@@ -168,21 +132,6 @@ public class Graph {
 		}
 		
 		return ret;
-	}
-
-	public static void main(String[] args) {
-		Graph g = new Graph("MapInformation.txt");
-		
-//		Path p = Dijkstra.shortestPath(g, "A", "C");
-		
-//		Vertex a = g.getVertex("A");
-		
-//		System.out.print(graph.get(a));
-		
-//		Edge e = getEdge("A", "C");
-//		System.out.println(e.toString());
-		
-		//System.out.println(g.toString());
 	}
 	
 }
