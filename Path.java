@@ -1,5 +1,4 @@
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.ArrayList;
 
 /**
  * 
@@ -13,18 +12,18 @@ public class Path implements Comparable<Path> {
 	
 	// ========================================================== Properties
 	
-	private HeapPriorityQueue<Vertex> vertices;
+	private ArrayList<Vertex> vertices;
 	private int cost;
 	
 	// ========================================================== Constructors
 	
-	public Path(HeapPriorityQueue<Vertex> vertices, int cost) {
+	public Path(ArrayList<Vertex> vertices, int cost) {
 		this.vertices = vertices;
 		this.cost = cost;
 	}
 	
 	public Path(State s) {
-		vertices = new HeapPriorityQueue<Vertex>();
+		vertices = new ArrayList<Vertex>();
 		cost = s.cost;
 		
 		for (char c : s.path.toCharArray()) {
