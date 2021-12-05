@@ -11,6 +11,10 @@ import java.util.Set;
  */
 public class Dijkstra {
 	
+	// ========================================================== Properties
+	
+	public static int totalCost = 0;
+	
 	// ========================================================== Methods
 
 	@SuppressWarnings("static-access")
@@ -27,6 +31,7 @@ public class Dijkstra {
 			
 			visited.add(nextEntry.vertex);
 			if (nextEntry.vertex.equals(v2)) {
+				totalCost = nextEntry.cost;
 				return new Path(nextEntry);
 			} else {
 				String currVertex = nextEntry.vertex;

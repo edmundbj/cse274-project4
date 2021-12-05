@@ -24,7 +24,7 @@ public class Path implements Comparable<Path> {
 	
 	public Path(State s) {
 		vertices = new ArrayList<Vertex>();
-		cost = s.cost;
+		this.cost = Dijkstra.totalCost;
 		
 		for (char c : s.path.toCharArray()) {
 			vertices.add(Graph.getVertex("" + c));
