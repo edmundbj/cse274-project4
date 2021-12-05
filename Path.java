@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 /**
  * 
@@ -24,7 +25,8 @@ public class Path implements Comparable<Path> {
 	
 	public Path(State s) {
 		vertices = new ArrayList<Vertex>();
-		this.cost = Dijkstra.totalCost;
+		//this.cost = Dijkstra.totalCost;
+		this.cost = s.cost;
 		
 		for (char c : s.path.toCharArray()) {
 			vertices.add(Graph.getVertex("" + c));
@@ -44,7 +46,7 @@ public class Path implements Comparable<Path> {
 		String ret = "";
 		
 		for (Vertex v : vertices) {
-			ret += (Graph.returnAddress ? v.getAddress() : v.getSymbol()) + "  -->  ";
+			ret += (Graph.returnAddress ? v.getAddress() + "  -->  \n": v.getSymbol() + "  -->  ");
 		}
 		
 		return ret.substring(0, ret.length() - 6) + "\n\nThe shortest path costs " + cost + (Graph.useDistCost ? " miles" : " minutes");

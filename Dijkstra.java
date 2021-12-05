@@ -31,7 +31,7 @@ public class Dijkstra {
 			
 			visited.add(nextEntry.vertex);
 			if (nextEntry.vertex.equals(v2)) {
-				totalCost = nextEntry.cost;
+				//totalCost = nextEntry.cost;
 				return new Path(nextEntry);
 			} else {
 				String currVertex = nextEntry.vertex;
