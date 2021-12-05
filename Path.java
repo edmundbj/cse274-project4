@@ -13,22 +13,22 @@ public class Path implements Comparable<Path> {
 	
 	// ========================================================== Properties
 	
-	private Queue<Vertex> verticies;
+	private HeapPriorityQueue<Vertex> vertices;
 	private int cost;
 	
 	// ========================================================== Constructors
 	
-	public Path(Queue<Vertex> verticies, int cost) {
-		this.verticies = verticies;
+	public Path(HeapPriorityQueue<Vertex> vertices, int cost) {
+		this.vertices = vertices;
 		this.cost = cost;
 	}
 	
 	public Path(State s) {
-		verticies = new PriorityQueue<Vertex>();
+		vertices = new HeapPriorityQueue<Vertex>();
 		cost = s.cost;
 		
 		for (char c : s.path.toCharArray()) {
-			verticies.add(Graph.getVertex("" + c));
+			vertices.add(Graph.getVertex("" + c));
 		}
 		
 	}
@@ -44,7 +44,7 @@ public class Path implements Comparable<Path> {
 	public String toString() {
 		String ret = "";
 		
-		for (Vertex v : verticies) {
+		for (Vertex v : vertices) {
 			ret += (Graph.returnAddress ? v.getAddress() : v.getSymbol()) + "  -->  ";
 		}
 		

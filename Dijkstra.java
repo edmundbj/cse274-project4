@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.Set;
 
 /**
@@ -13,15 +12,10 @@ import java.util.Set;
 public class Dijkstra {
 	
 	// ========================================================== Methods
-	
-	/**
-	 * 1. Don't need to create a Dijkstra object in main method since this method is static, just call it.
-	 * 
-	 * 2. Remember to replace PriorityQueue with our implementation of HeapPriorityQueue.
-	 */
+
 	@SuppressWarnings("static-access")
 	public static Path shortestPath(Graph g, String v1, String v2) {
-		PriorityQueue<State> pq = new PriorityQueue<State>();
+		HeapPriorityQueue<State> pq = new HeapPriorityQueue<State>();
 		pq.add(new State(v1, 0, v1));
 		ArrayList<String> visited = new ArrayList<String>();
 		
@@ -42,11 +36,11 @@ public class Dijkstra {
 				Set<Vertex> neighbors = g.getNeighbors(g.getVertex(currVertex));
 				
 				for (Vertex v : neighbors) { 
-					if (!visited.contains(v.getSymbol())) { // every unvisited neighbor to currVertex, V
-						int nextCost = 0; // edge cost of currVertex --> V
+					if (!visited.contains(v.getSymbol())) {
+						int nextCost = 0;
 						if (g.useDistCost) nextCost = currCost + g.getEdge(currVertex, v.getSymbol()).getDistCost();
 						else nextCost = currCost + g.getEdge(currVertex, v.getSymbol()).getTimeCost();
-						String nextPath = currPath + v.getSymbol(); // V appended
+						String nextPath = currPath + v.getSymbol();
 						pq.add(new State(v.getSymbol(), nextCost, nextPath));
 					}
 				}
@@ -54,6 +48,7 @@ public class Dijkstra {
 			}
 		}
 		
+		// there is no possible path between the two Vertices
 		return null;
 		
 	}

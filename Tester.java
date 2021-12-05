@@ -44,10 +44,13 @@ public class Tester extends JPanel implements ActionListener {
 	Random rnd = new Random();
 	private String v1, v2;
 	
+	@SuppressWarnings("static-access")
 	public Tester() throws IOException {
 		
-		Graph.useDistCost = false;
-		Graph.returnAddress = false;
+		Graph graph = new Graph("MapInformation.txt");
+		
+		graph.useDistCost = false;
+		graph.returnAddress = false;
 		
 		JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
 		JPanel northPanel = new JPanel(new BorderLayout());
@@ -254,28 +257,28 @@ public class Tester extends JPanel implements ActionListener {
         box1.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		Graph.useDistCost = false;
+        		graph.useDistCost = false;
         	}
         });
         
         box2.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		Graph.useDistCost = true;
+        		graph.useDistCost = true;
         	}
         });
         
         box3.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		Graph.returnAddress = false;
+        		graph.returnAddress = false;
         	}
         });
         
         box4.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		Graph.returnAddress = true;
+        		graph.returnAddress = true;
         	}
         });
         
@@ -284,7 +287,7 @@ public class Tester extends JPanel implements ActionListener {
         submit.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		Graph graph = new Graph("MapInformation.txt");
+        		//Graph graph = new Graph("MapInformation.txt");
         		//output.setText(graph.toString());
         		output.setText(Dijkstra.shortestPath(graph, v1, v2).toString());
         		
@@ -295,7 +298,7 @@ public class Tester extends JPanel implements ActionListener {
         all.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		Graph graph = new Graph("MapInformation.txt");
+        		//Graph graph = new Graph("MapInformation.txt");
         		//output.setText(graph.toString());
         		output.setText(graph.toString());
         		

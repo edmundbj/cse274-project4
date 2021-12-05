@@ -40,7 +40,7 @@ public class Graph {
 			Scanner file = new Scanner(new File(fileName));
 			String line = file.nextLine();
 			
-			Map<String, String> verticies = new HashMap<String, String>();
+			Map<String, String> vertices = new HashMap<String, String>();
 			
 			// Skips lines until the Nodes are reached
 			while (!line.equals("<Nodes>")) { line = file.nextLine(); }
@@ -52,7 +52,7 @@ public class Graph {
 			// Creates Vertex objects (each of which contains a symbol and an address property)
 			while (!line.equals("</Nodes>")) {
 				String[] s = line.split("\t");
-				verticies.put(s[0], s[1]);
+				vertices.put(s[0], s[1]);
 				line = file.nextLine();
 			}
 			
@@ -65,11 +65,11 @@ public class Graph {
 			line = file.nextLine();
 			String[] s = line.split("\t");
 			while (!line.equals("</Edges>")) {
-				Vertex v = new Vertex(s[0], verticies.get(s[0]));
+				Vertex v = new Vertex(s[0], vertices.get(s[0]));
 				Set<Edge> edges = new HashSet<Edge>();
 
 				do {
-					Vertex destination = new Vertex(s[1], verticies.get(s[1]));
+					Vertex destination = new Vertex(s[1], vertices.get(s[1]));
 					edges.add(new Edge(v, destination, Integer.parseInt(s[2]), Integer.parseInt(s[3])));
 					line = file.nextLine();
 					s = line.split("\t");
@@ -126,8 +126,8 @@ public class Graph {
 		for (Vertex v : graph.keySet()) {
 			for (Edge e : graph.get(v)) {
 				ret += (returnAddress ? e.getSource().getAddress() : e.getSource().getSymbol()) + " -----> " +
-						(returnAddress ? e.getDestination().getAddress() : e.getDestination().getSymbol()) + " -----> " +
-						(useDistCost ? e.getDistCost() : e.getTimeCost()) + "\n";
+						(returnAddress ? e.getDestination().getAddress() : e.getDestination().getSymbol()) + " =  " +
+						(useDistCost ? e.getDistCost() + " miles" : e.getTimeCost() + " minutes") + "\n";
 			}
 		}
 		
