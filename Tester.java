@@ -1,17 +1,12 @@
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -19,9 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -32,12 +24,20 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.Timer;
 
+/**
+ * 
+ * @author Blake Edmunds
+ * @author Sam Curran
+ * 
+ * This is the Tester class for Project 4.
+ * 
+ */
+@SuppressWarnings("serial")
 public class Tester extends JPanel implements ActionListener {
 
 	Timer tmr = null;
@@ -154,8 +154,6 @@ public class Tester extends JPanel implements ActionListener {
         centerPanel.add(submitPanel, BorderLayout.WEST);
 
         // Creating JTextField that will output the results
-        
-        
         
         JPanel outputPanel = new JPanel();
         JTextArea output = new JTextArea();
@@ -286,8 +284,6 @@ public class Tester extends JPanel implements ActionListener {
         submit.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		//Graph graph = new Graph("MapInformation.txt");
-        		//output.setText(graph.toString());
         		if (v1 == null || v2 == null) output.setText("Please complete selection.");
         		else if (Dijkstra.shortestPath(graph, v1, v2) == null) output.setText("No path exists between locations.");
         		else output.setText(Dijkstra.shortestPath(graph, v1, v2).toString());
@@ -299,15 +295,11 @@ public class Tester extends JPanel implements ActionListener {
         all.addActionListener(new ActionListener() {
         	@Override
         	public void actionPerformed(ActionEvent event) {
-        		//Graph graph = new Graph("MapInformation.txt");
-        		//output.setText(graph.toString());
         		output.setText(graph.toString());
         		
         	}
 
         });
-        
-        
         
         // Completely the GUI
         
@@ -323,58 +315,6 @@ public class Tester extends JPanel implements ActionListener {
 		tmr = new Timer(0, new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				if (!(field1.getText().equals("")) && !(field2.getText().equals(""))) {
-//					output.setText("Selections Made. Click Submit.");
-//				}
-			}
-		});
-		
-		//============================================================ Mouse Pressed
-		
-		addMouseListener(new MouseListener() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-			}
-			@Override
-			public void mouseReleased(MouseEvent e) {
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-			}
-		});
-		
-		//============================================================ Mouse Moved, Dragged
-		
-		addMouseMotionListener(new MouseMotionListener() {
-			@Override
-			public void mouseMoved(MouseEvent e) {
-			}
-			@Override
-			public void mouseDragged(MouseEvent e) {
-				mouseMoved(e);
-			}
-		});
-		
-		//============================================================ Button pressed
-
-		
-		//============================================================ Key pressed
-		
-		window.addKeyListener(new KeyListener() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-			}
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-			@Override
-			public void keyReleased(KeyEvent e) {
 			}
 		});
 		tmr.start();
@@ -393,7 +333,6 @@ public class Tester extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 

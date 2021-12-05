@@ -1,6 +1,7 @@
 /**
  * 
  * @author Blake Edmunds
+ * @author Sam Curran
  *
  */
 public interface PQInterface<T extends Comparable<? super T>> {

@@ -1,11 +1,10 @@
 import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.NoSuchElementException;
 
 /**
  * 
  * @author Blake Edmunds
+ * @author Sam Curran
  *
  * The HeapPriorityQueue class for Lab 11. This class is of a generic data type
  * and implements PQInterface.

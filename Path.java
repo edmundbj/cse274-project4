@@ -47,7 +47,7 @@ public class Path implements Comparable<Path> {
 			ret += (Graph.returnAddress ? v.getAddress() + "  -->  \n": v.getSymbol() + "  -->  ");
 		}
 		
-		return ret.substring(0, ret.length() - 6) + "\n\nThe shortest path costs " + cost + (Graph.useDistCost ? " miles" : " minutes");
+		return ret.substring(0, ret.length() - 6) + "\n\nThe shortest path is " + cost + (Graph.useDistCost ? " miles" : " minutes");
 	}
 
 }
