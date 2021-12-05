@@ -84,7 +84,6 @@ public class Tester extends JPanel implements ActionListener {
 		// Creating JList of addresses
 		
 		final JList<String> list1 = new JList<String>(addresses.toArray(new String[addresses.size()]));
-		list1.setCellRenderer(new Render<String>());
 		final JList<String> list2 = new JList<String>(addresses.toArray(new String[addresses.size()]));
 		
 		// Creating JScrollPanels
@@ -169,7 +168,7 @@ public class Tester extends JPanel implements ActionListener {
         JScrollPane outputArea = new JScrollPane(output);
         JScrollBar bar = outputArea.getVerticalScrollBar();
         outputArea.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        outputArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        outputArea.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         bar.setPreferredSize(new Dimension(15,0));
         
         
@@ -289,7 +288,9 @@ public class Tester extends JPanel implements ActionListener {
         	public void actionPerformed(ActionEvent event) {
         		//Graph graph = new Graph("MapInformation.txt");
         		//output.setText(graph.toString());
-        		output.setText(Dijkstra.shortestPath(graph, v1, v2).toString());
+        		if (v1 == null || v2 == null) output.setText("Please complete selection.");
+        		else if (Dijkstra.shortestPath(graph, v1, v2) == null) output.setText("No path exists between locations.");
+        		else output.setText(Dijkstra.shortestPath(graph, v1, v2).toString());
         		
         	}
 
